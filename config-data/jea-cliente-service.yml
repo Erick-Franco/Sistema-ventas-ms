@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/cliente-jea
     username: postgres
-    password: 123456
+    password:
     driver-class-name: org.postgresql.Driver
 
   jpa:

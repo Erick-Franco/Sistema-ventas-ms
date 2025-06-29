@@ -1,18 +1,37 @@
 <header class="header">
-  <span class="logo">Sistema de Ventas</span>
-  <button (click)="toggleSidebar()">☰</button>
-  <button (click)="logout()">Cerrar sesión</button>
-</header>
+  <div class="left-section">
+    <button class="menu-btn" (click)="toggleSidebar()">
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="logo">
+      <i class="fas fa-gamepad"></i> VENTA GAMING
+    </div>
+  </div>
 
+
+
+  <div class="right-section">
+    <button class="logout-btn" (click)="logout()">
+      <i class="fa fa-sign-out-alt"></i>
+      <span class="logout-text">Cerrar sesión</span>
+    </button>
+  </div>
+
+</header>
 <div class="container">
-  <nav class="sidebar" [class.hidden]="!showSidebar">
-    <a *ngFor="let acceso of accesos" [routerLink]="acceso.url">
-      <i class="fa" [ngClass]="acceso.icono"></i> {{ acceso.nombre | titlecase }}
-    </a>
+  <nav class="sidebar" [ngClass]="{ 'collapsed': !showSidebar }">
+    <ul class="nav-list">
+      <li *ngFor="let acceso of accesos">
+        <a [routerLink]="acceso.url" routerLinkActive="active">
+          <i class="fa" [ngClass]="acceso.icono" aria-hidden="true"></i>
+          <span class="link-text">{{ acceso.nombre | titlecase }}</span>
+        </a>
+      </li>
+    </ul>
   </nav>
+
 
   <main class="content">
     <router-outlet></router-outlet>
   </main>
-
 </div>

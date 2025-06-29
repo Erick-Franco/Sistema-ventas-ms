@@ -19,26 +19,25 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login(): void {
-    this.authService.login({ userName: this.userName, password: this.password }).subscribe({
-      next: (res) => {
-        const token = res.token;
-        localStorage.setItem('token', token);
+    this.authService.login({ userName: this.userName, password: this.password })
+      .subscribe({
+        next: (res) => {
+          localStorage.setItem('token', res.token);
 
-        try {
-          const payload = JSON.parse(atob(token.split('.')[1]));
+          // Decodificar el token para obtener el ID del usuario
+          const payload = JSON.parse(atob(res.token.split('.')[1]));
           localStorage.setItem('userId', payload.id);
+
+          // Guardar nombre de usuario y accesos
           localStorage.setItem('userName', res.userName);
           localStorage.setItem('accesos', JSON.stringify(res.accesos));
-        } catch (e) {
-          console.error('Error al decodificar el token', e);
+
+          // Redirigir a la página principal
+          this.router.navigate(['/categorias']); // o /dashboard
+        },
+        error: () => {
+          alert('Credenciales inválidas');
         }
-
-        this.router.navigate(['/dashboard']);
-      },
-      error: () => {
-        alert('Credenciales inválidas');
-      }
-    });
+      });
   }
-
 }

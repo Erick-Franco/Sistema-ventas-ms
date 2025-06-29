@@ -10,6 +10,7 @@ export class RolService {
 
   constructor(private http: HttpClient) {}
 
-
-
+  getRoles(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/listar`);
+  }
 }

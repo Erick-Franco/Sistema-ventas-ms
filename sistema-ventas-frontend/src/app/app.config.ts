@@ -7,9 +7,12 @@ import {provideHttpClient, withFetch, withInterceptors} from "@angular/common/ht
 import {catchInterceptor} from "./interceptors/catch.interceptor";
 import {urlInterceptor} from "./interceptors/url.interceptor";
 import {tokenInterceptor} from "./interceptors/token.interceptor";
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }),
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withFetch()),
     provideHttpClient(
@@ -19,6 +22,22 @@ export const appConfig: ApplicationConfig = {
         catchInterceptor
       ])
     ),
-    provideAnimationsAsync()]
-
+    provideAnimationsAsync(),
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue: {
+        hasBackdrop: true,
+        disableClose: false,
+        width: '400px'
+      }
+    },
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center'
+      }
+    }
+  ]
 };

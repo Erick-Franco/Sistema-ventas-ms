@@ -128,7 +128,9 @@ export class VentasComponent implements OnInit {
       return;
     }
     this.canastaService.agregar(producto);
+    producto.cantidad--;
   }
+
 
 
   seleccionarMetodoPago(id: number) {
@@ -145,15 +147,28 @@ export class VentasComponent implements OnInit {
     }
 
     this.canastaService.agregar(producto);
+
+    // 🔻 Disminuye visualmente el stock
+    const prodVisual = this.productosFiltrados.find(p => p.id === producto.id);
+    if (prodVisual) prodVisual.cantidad--;
   }
+
 
 
   disminuirCantidad(producto: Producto) {
     this.canastaService.quitar(producto);
+    // 🔺 Aumenta visualmente el stock
+    const prodVisual = this.productosFiltrados.find(p => p.id === producto.id);
+    if (prodVisual) prodVisual.cantidad++;
   }
 
   eliminarItem(producto: Producto) {
+    const item = this.items.find(i => i.producto.id === producto.id);
+    const cantidadEnCanasta = item?.cantidad || 0;
     this.canastaService.eliminar(producto);
+    // 🔺 Aumenta stock visual según lo que había en la canasta
+    const prodVisual = this.productosFiltrados.find(p => p.id === producto.id);
+    if (prodVisual) prodVisual.cantidad += cantidadEnCanasta;
   }
 
   registrarVenta() {
@@ -172,14 +187,13 @@ export class VentasComponent implements OnInit {
       return;
     }
 
-    const detalle: DetalleVenta[] = this.items
-      .filter(item => item.producto.id !== undefined) // Filtrar productos sin ID
-      .map((item) => ({
-        productoId: item.producto.id!,
-        cantidad: item.cantidad,
-        nombreProducto: item.producto.nombre,
-        precioUnitario: item.producto.precioVenta
-      }));
+    const detalle: DetalleVenta[] = this.items.map((item) => ({
+      productoId: item.producto.id!, // ¡Aquí el cambio!
+      cantidad: item.cantidad,
+      nombreProducto: item.producto.nombre,
+      precioUnitario: item.producto.precioVenta
+    }));
+
 
     const venta: Venta = {
       clienteId: this.clienteEncontrado.id,
@@ -192,6 +206,10 @@ export class VentasComponent implements OnInit {
         alert('Venta registrada con éxito');
         this.canastaService.vaciar();
         this.metodoPago = 0;
+        this.listarProductos();
+        this.clienteEncontrado = null;
+        this.dniCliente= '';
+
       },
       error: () => alert('Error al registrar la venta')
     });

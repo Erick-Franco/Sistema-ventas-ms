@@ -12,7 +12,7 @@
         <module name="jea-auth" />
         <module name="jea-registry-server" />
       </profile>
-      <profile name="Annotation profile for jea-venta" enabled="true">
+      <profile name="Annotation profile for jea-proveedor" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

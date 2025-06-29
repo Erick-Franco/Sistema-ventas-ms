@@ -276,14 +276,7 @@
         </mat-form-field>
 
         <!-- Cantidad -->
-        <mat-form-field appearance="outline">
-          <mat-label>Cantidad en Stock</mat-label>
-          <input matInput type="number" formControlName="cantidad" min="0">
-          <mat-icon matSuffix>inventory</mat-icon>
-          <mat-error *ngIf="productoForm.get('cantidad')?.hasError('min')">
-            La cantidad debe ser mayor o igual a 0
-          </mat-error>
-        </mat-form-field>
+
 
         <!-- Precio de Venta -->
         <mat-form-field appearance="outline">

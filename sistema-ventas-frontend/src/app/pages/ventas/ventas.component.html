@@ -15,6 +15,9 @@
     </div>
   </div>
 
+
+  <div class="carrito">
+  </div>
 </header>
 
 <main class="contenido">
@@ -52,7 +55,7 @@
     <div class="productos">
       <div class="producto" *ngFor="let producto of productosFiltrados">
         <p class="codigo">Código: {{ producto.codigo }}</p>
-        <img [src]="getImagenUrlOrDefault(producto.imagen)" [alt]="producto.nombre" (error)="imagenError($event)">
+        <img [src]="'http://localhost:8085/imagenes/' + producto.imagen" [alt]="producto.nombre" (error)="imagenError($event)">
         <h3>{{ producto.nombre }}</h3>
         <p class="categoria">Categoría: {{ producto.categoria.nombre }}</p>
         <p class="stock">Stock: {{ producto.cantidad }}</p>
@@ -69,7 +72,7 @@
       <h3>🧺 Canasta</h3>
 
       <div class="item-canasta" *ngFor="let item of items">
-        <img [src]="getImagenUrlOrDefault(item.producto.imagen)"
+        <img [src]="'http://localhost:8085/imagenes/' + item.producto.imagen"
              alt="{{ item.producto.nombre }}"
              class="img-canasta"
              (error)="imagenError($event)">

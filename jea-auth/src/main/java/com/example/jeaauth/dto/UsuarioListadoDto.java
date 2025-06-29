@@ -3,7 +3,7 @@ package com.example.jeaauth.dto;
 import lombok.Data;
 
 @Data
-public class UsuarioDto {
+public class UsuarioListadoDto {
     private Long id;
     private String nombres;
     private String apellidoPaterno;
@@ -13,11 +13,9 @@ public class UsuarioDto {
     private String telefono;
     private Boolean estado;
     private String userName;
-    private String password;
-    private Long rolId; // 👉 ID del rol seleccionado al crear el usuario
+    private String rol; // ✅ nombre del rol (ej: ADMIN, USER)
 
-
-    public UsuarioDto(Long id,String nombres, String apellidoPaterno, String apellidoMaterno, String dni, String direccion, String telefono, Boolean estado, String userName, String password) {
+    public UsuarioListadoDto(Long id, String nombres, String apellidoPaterno, String apellidoMaterno, String dni, String direccion, String telefono, Boolean estado, String userName, String rol) {
         this.id = id;
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
@@ -27,10 +25,7 @@ public class UsuarioDto {
         this.telefono = telefono;
         this.estado = estado;
         this.userName = userName;
-        this.password = password;
-    }
-
-    public UsuarioDto() {
+        this.rol = rol;
     }
 
     public Long getId() {
@@ -97,14 +92,6 @@ public class UsuarioDto {
         this.estado = estado;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getUserName() {
         return userName;
     }
@@ -113,11 +100,11 @@ public class UsuarioDto {
         this.userName = userName;
     }
 
-    public Long getRolId() {
-        return rolId;
+    public String getRol() {
+        return rol;
     }
 
-    public void setRolId(Long rolId) {
-        this.rolId = rolId;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }

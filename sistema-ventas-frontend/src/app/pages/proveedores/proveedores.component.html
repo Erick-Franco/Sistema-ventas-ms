@@ -130,7 +130,10 @@
                   <mat-icon>edit</mat-icon>
                 </button>
 
-                <button mat-icon-button [color]="(proveedor.estado === true) ? 'warn' : 'accent'" (click)="toggleEstado(proveedor)" [matTooltip]="(proveedor.estado === true) ? 'Desactivar' : 'Activar'">
+                <button mat-icon-button 
+                        [color]="(proveedor.estado === true) ? 'warn' : 'accent'" 
+                        (click)="toggleEstado(proveedor)" 
+                        [matTooltip]="(proveedor.estado === true) ? 'Desactivar' : 'Activar'">
                   <mat-icon>{{ (proveedor.estado === true) ? 'toggle_off' : 'toggle_on' }}</mat-icon>
                 </button>
 
@@ -242,7 +245,7 @@
             <ul>
               <li>Se crean como <strong>activos</strong></li>
               <li>El RUC debe ser único en el sistema</li>
-              <li>Se puede activar o desactivar según necesidad</li>
+              <li>Se puede <strong>activar y desactivar</strong> según necesidad</li>
               <li>Al buscar por RUC se valida automáticamente</li>
             </ul>
           </div>

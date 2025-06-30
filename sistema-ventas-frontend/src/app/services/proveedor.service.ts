@@ -39,4 +39,8 @@ export class ProveedorService {
   desactivar(id: number): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/desactivar/${id}`, {});
   }
+
+  activar(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/activar/${id}`, {});
+  }
 }

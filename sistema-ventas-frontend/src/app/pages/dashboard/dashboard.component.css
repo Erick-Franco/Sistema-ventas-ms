@@ -8,12 +8,15 @@
 .dashboard-header {
   text-align: center;
   margin-bottom: 30px;
+
 }
 
 .logo {
-  width: 70px;
-  height: 70px;
-  margin-bottom: 10px;
+  width: 200px;
+  height: 200px;
+  margin-top: -30px;
+
+
 }
 
 .dashboard-header h1 {
@@ -49,3 +52,4 @@
   padding: 20px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+

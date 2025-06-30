@@ -59,6 +59,12 @@ public class ProveedorController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/activar/{id}")
+    public ResponseEntity<Void> activar(@PathVariable Long id) {
+        proveedorService.activar(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
     @GetMapping("/buscar")
     public ResponseEntity<Proveedor> buscarPorRuc(@RequestParam String ruc) {

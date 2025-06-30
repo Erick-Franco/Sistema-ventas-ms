@@ -19,6 +19,8 @@ public interface ProveedorService {
 
     void desactivar(Long id);
 
+    void activar(Long id);
+
     Optional<Proveedor> buscarPorRuc(String ruc);
 
 }

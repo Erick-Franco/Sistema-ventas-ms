@@ -65,6 +65,18 @@ public class ProveedorServiceImpl implements ProveedorService {
         }
     }
 
+    @Override
+    public void activar(Long id) {
+        Optional<Proveedor> proveedorOptional = proveedorRepository.findById(id);
+        if (proveedorOptional.isPresent()) {
+            Proveedor proveedor = proveedorOptional.get();
+            proveedor.setEstado(true);
+            proveedorRepository.save(proveedor);
+        } else {
+            throw new EntityNotFoundException("Proveedor con ID " + id + " no encontrado.");
+        }
+    }
+
 
 
     @Override

@@ -211,23 +211,31 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
   }
 
   toggleEstado(proveedor: Proveedor): void {
-    const nuevoEstado = !proveedor.estado;
-    const proveedorActualizado = { ...proveedor, estado: nuevoEstado };
-    
-    this.proveedorService.actualizar(proveedor.id!, proveedorActualizado).subscribe({
-      next: () => {
-        this.snackBar.open(
-          `Proveedor ${nuevoEstado ? 'activado' : 'desactivado'} exitosamente`, 
-          'Cerrar', 
-          { duration: 3000 }
-        );
-        this.cargarProveedores();
-      },
-      error: (error) => {
-        console.error('Error al cambiar estado del proveedor:', error);
-        this.snackBar.open('Error al cambiar estado del proveedor', 'Cerrar', { duration: 3000 });
-      }
-    });
+    if (proveedor.estado === true) {
+      // Desactivar proveedor
+      this.proveedorService.desactivar(proveedor.id!).subscribe({
+        next: () => {
+          this.snackBar.open('Proveedor desactivado exitosamente', 'Cerrar', { duration: 3000 });
+          this.cargarProveedores();
+        },
+        error: (error) => {
+          console.error('Error al desactivar proveedor:', error);
+          this.snackBar.open('Error al desactivar proveedor', 'Cerrar', { duration: 3000 });
+        }
+      });
+    } else {
+      // Activar proveedor usando el nuevo endpoint
+      this.proveedorService.activar(proveedor.id!).subscribe({
+        next: () => {
+          this.snackBar.open('Proveedor activado exitosamente', 'Cerrar', { duration: 3000 });
+          this.cargarProveedores();
+        },
+        error: (error) => {
+          console.error('Error al activar proveedor:', error);
+          this.snackBar.open('Error al activar proveedor', 'Cerrar', { duration: 3000 });
+        }
+      });
+    }
   }
 
   // Utilidades para estados
@@ -250,12 +258,17 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
       this.proveedorService.buscarPorRuc(ruc).subscribe({
         next: (proveedor) => {
           if (proveedor) {
-            this.snackBar.open('Proveedor encontrado', 'Cerrar', { duration: 2000 });
+            this.snackBar.open('Proveedor encontrado - datos autocompletos', 'Cerrar', { duration: 2000 });
             this.proveedorForm.patchValue(proveedor);
           }
         },
-        error: () => {
-          // No mostrar error si no se encuentra, es normal
+        error: (error) => {
+          // No mostrar error si es 404 (no encontrado), es normal
+          if (error.status !== 404) {
+            console.error('Error al buscar proveedor por RUC:', error);
+            this.snackBar.open('Error al buscar proveedor', 'Cerrar', { duration: 3000 });
+          }
+          // Si es 404, simplemente no hacemos nada - el usuario puede crear un nuevo proveedor
         }
       });
     }
